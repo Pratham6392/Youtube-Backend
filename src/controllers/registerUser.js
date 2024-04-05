@@ -22,7 +22,7 @@ const registerUser=async(req,res)=>{
     const { fullName, email, username, password } = req.body;
     // return res.json(new ApiResponse(200,req.files,"user"))
     const parsedResponce=User.saveParse(req.body)
-    if(parsedResponce){
+    if(parsedResponce.success){
         return res.ApiError(411,"give proper input field")
     }
     console.log("====>",req.files.avatar[0]);
