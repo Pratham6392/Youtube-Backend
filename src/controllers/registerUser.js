@@ -7,12 +7,24 @@ import { upload } from "../middlewares/multer.js";
 import  {uploadOnCloudinary}  from "../utils/cloudinary.js";
 import path from "path";
 import { dirname } from 'path';
+import {z} from Zod;
 
+
+const User = z.object({
+    username: z.string(),
+    fullName: z.string(),
+    email: z.string(),
+    password: z.string(),
+  });
 
 const registerUser=async(req,res)=>{
   
     const { fullName, email, username, password } = req.body;
     // return res.json(new ApiResponse(200,req.files,"user"))
+    const parsedResponce=User.saveParse(req.body)
+    if(parsedResponce){
+        return res.ApiError(411,"give proper input field")
+    }
     console.log("====>",req.files.avatar[0]);
     
     
