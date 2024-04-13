@@ -3,14 +3,14 @@ import jwt from "jsonwebtoken"
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import mongoose from "mongoose";
-import { upload } from "../middlewares/multer.js";
+
 import  {uploadOnCloudinary}  from "../utils/cloudinary.js";
 import path from "path";
 import { dirname } from 'path';
-import {z} from Zod;
+import {z} from "zod";
 
 
-const User = z.object({
+const inputDetails = z.object({
     username: z.string(),
     fullName: z.string(),
     email: z.string(),
@@ -21,7 +21,7 @@ const registerUser=async(req,res)=>{
   
     const { fullName, email, username, password } = req.body;
     // return res.json(new ApiResponse(200,req.files,"user"))
-    const parsedResponce=User.saveParse(req.body)
+    const parsedResponce=inputDetails.saveParse(req.body)
     if(parsedResponce.success){
         return res.ApiError(411,"give proper input field")
     }

@@ -3,7 +3,7 @@ import cookieParser from "cookie-parser"
 import cors from "cors"
 import dotenv from "dotenv"
 import path from "path"
-import { upload } from "./src/middlewares/multer.js"
+
 dotenv.config({
     path:"./env"
 
@@ -33,25 +33,8 @@ app.listen( 3000, () => {
 
 
     
-app.post("/public/temp",upload.fields([
-    {
-          name:"avatar",
-          maxCount: 1
-    },
-    {
-        name:"coverImage",
-        maxCount: 1
-    }]),(req,res)=>{
-        // console.log(req.files)
-        return res.json(new ApiResponse(200,req.files,"hi"))
-        
-    })
- app.get("/",(req,res)=>{
- res.render("homepage")
+
  
- 
- 
-     })
      
 
 app.use(express.urlencoded({extended:true,limit:"16kb"}))
